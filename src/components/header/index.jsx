@@ -54,7 +54,11 @@ const MainHeader = () => {
             Activities
           </Link>
 
-          <Link color="foreground" href="#">
+          <Link
+            color="foreground"
+            href="/projects"
+            className={pathname === "/projects" ? "text-blue-600" : ""}
+          >
             Projects
           </Link>
         </div>

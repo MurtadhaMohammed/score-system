@@ -45,7 +45,7 @@ export const Head = () => {
         }}
         color="primary"
       >
-        + New Student
+        + New Project
       </Button>
     </div>
   );

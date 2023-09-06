@@ -7,7 +7,7 @@ export const courses = [
       attendance: 10,
       quiz: 20,
       task: 30,
-      projucts: 40,
+      project: 40,
     },
   },
 ];
@@ -116,5 +116,33 @@ export const scoreList = [
     phone: "77719887676",
     img: "https://i.pravatar.cc/300?u=a042581f4e29026710d",
     score: "17",
+  },
+];
+
+export const projects = [
+  {
+    id: 1,
+    title: "Pure System",
+    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s `,
+    documents: null,
+    students,
+    score: 36
+  },
+  {
+    id: 2,
+    title: "Voting App ( Foo 1990 )",
+    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s `,
+    documents: [
+      "https://i.pravatar.cc/300?u=a042581f4e29026710d",
+      "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    ],
+    students,
+  },
+  {
+    id: 3,
+    title: "E-clinic Online System",
+    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s `,
+    documents: ["https://i.pravatar.cc/300?u=a042581f4e29026710d"],
+    students,
   },
 ];
