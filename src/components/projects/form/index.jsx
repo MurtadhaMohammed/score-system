@@ -10,7 +10,7 @@ import {
   Input,
   Avatar,
 } from "@nextui-org/react";
-import { useHomeStore } from "../store";
+import { useProjectStore } from "../store";
 import { useAppStore } from "@/store";
 
 export const PureForm = () => {
@@ -29,7 +29,7 @@ export const PureForm = () => {
     setBirthDate,
     setImg,
     reset,
-  } = useHomeStore();
+  } = useProjectStore();
   const { course } = useAppStore();
 
   const handleSubmit = () => {

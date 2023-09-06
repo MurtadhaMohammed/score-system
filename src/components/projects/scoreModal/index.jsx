@@ -9,27 +9,27 @@ import {
   Button,
   Chip,
 } from "@nextui-org/react";
-import { useActivitiesStore } from "../store";
+import { useActivitiesStore, useProjectStore } from "../store";
 // import { useAppStore } from "@/store";
-import { chipColor } from "..";
-import { scoreList } from "@/fake";
-import StudentCard from "../studentCard";
+import { courses, scoreList } from "@/fake";
+
 import JsonToCSV from "@/helper/JsonToCSV";
-import dayjs from "dayjs";
+import StudentCard from "../studentCard";
+import { useAppStore } from "@/store";
 
 export const ScroeModal = () => {
-  const { isScoreModal, setIsScoreModal, type, title, date } =
-    useActivitiesStore();
-  // const { course } = useAppStore();
+  const { course } = useAppStore();
+  const { isScoreModal, setIsScoreModal, title } = useProjectStore();
+  let courseInfo = courses.find((el) => el?.id === Number(course));
 
   const handleSubmit = () => {
-    let filename = `${title} - ${dayjs(date).format("YYYY-MM-DD")}`;
-    JsonToCSV(scoreList, filename);
+    let filename = `${title} - ${courseInfo?.title}`;
+    JsonToCSV(scoreList.slice(0, 2), filename);
   };
 
   return (
     <Modal
-      size="5xl"
+      size="md"
       isOpen={isScoreModal}
       onOpenChange={setIsScoreModal}
       scrollBehavior="inside"
@@ -38,14 +38,14 @@ export const ScroeModal = () => {
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1 border-b-1 border-b-slate-100 pt-4 pb-4">
           <b>{title}</b>
-          <Chip variant="dot" color={chipColor[type]} size="md">
-            {type}
+          <Chip variant="dot" color={"success"} size="md">
+            Project
           </Chip>
         </ModalHeader>
         <ModalBody>
-          <div className="grid grid-cols-3 gap-4 mt-4 mb-4">
-            {scoreList?.map((el, i) => (
-              <StudentCard key={i} data={el} type={type} />
+          <div className="grid grid-cols-1 gap-4 mt-4 mb-4">
+            {scoreList?.slice(0, 2)?.map((el, i) => (
+              <StudentCard key={i} data={el} />
             ))}
           </div>
         </ModalBody>

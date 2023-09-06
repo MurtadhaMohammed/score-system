@@ -1,27 +1,21 @@
 import { create } from "zustand";
 
-export const useHomeStore = create((set) => ({
+export const useProjectStore = create((set) => ({
   isModal: false,
+  isScoreModal: false,
   id: null,
-  name: null,
-  birthDate: null,
-  img: null,
-  phone: null,
-  email: null,
+  title: null,
+  description: null,
+  rate: null,
+
   setIsModal: (isModal) => set({ isModal }),
-  setName: (name) => set({ name }),
-  setBirthDate: (birthDate) => set({ birthDate }),
-  setImg: (img) => set({ img }),
-  setPhone: (phone) => set({ phone }),
-  setEmail: (email) => set({ email }),
+  setIsScoreModal: (isScoreModal) => set({ isScoreModal }),
+  setTitle: (title) => set({ title }),
+  setDescription: (description) => set({ description }),
+  setRate: (rate) => set({ rate }),
   setId: (id) => set({ id }),
   reset: () =>
     set({
-      name: null,
-      birthDate: null,
-      img: null,
-      phone: null,
-      email: null,
       id: null,
     }),
 }));

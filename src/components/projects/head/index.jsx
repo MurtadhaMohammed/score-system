@@ -2,10 +2,10 @@
 
 import { Button, Input } from "@nextui-org/react";
 import { RiSearch2Line } from "react-icons/ri";
-import { useHomeStore } from "../store";
+import { useProjectStore } from "../store";
 
 export const Head = () => {
-  const { setIsModal, reset } = useHomeStore();
+  const { setIsModal, reset } = useProjectStore();
   return (
     <div className="flex justify-between items-center pb-4">
       <Input
@@ -39,10 +39,10 @@ export const Head = () => {
       />
 
       <Button
-        onClick={() => {
-          reset();
-          setIsModal(true);
-        }}
+        // onClick={() => {
+        //   reset();
+        //   setIsModal(true);
+        // }}
         color="primary"
       >
         + New Project

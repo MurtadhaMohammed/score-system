@@ -15,44 +15,40 @@ import {
 } from "@nextui-org/react";
 
 import { BiEdit, BiTrash } from "react-icons/bi";
-import { useHomeStore } from "../store";
+import { HiStar } from "react-icons/hi";
+import { TbScoreboard } from "react-icons/tb";
+import { useProjectStore } from "../store";
 import { courses, projects, students } from "@/fake";
 import { useAppStore } from "@/store";
 
 export const PureTable = ({ head = null }) => {
-  const {
-    setIsModal,
-    setName,
-    setPhone,
-    setId,
-    setEmail,
-    setBirthDate,
-    setImg,
-  } = useHomeStore();
+  const { setIsScoreModal, setId, setTitle } = useProjectStore();
   const { course, loading } = useAppStore();
-  let courseInfo = courses.find((el) => el?.id === Number(course));
-
-
+  // let courseInfo = courses.find((el) => el?.id === Number(course));
 
   const handleEdit = (row) => {
+    // setId(row?.id);
+    // setIsModal(true);
+  };
+  const handleViewScore = (row) => {
     setId(row?.id);
-    setName(row?.name);
-    setPhone(row?.phone);
-    setEmail(row?.email);
-    setBirthDate(row?.birthDate);
-    setImg(row?.img);
-    setIsModal(true);
+    setTitle(row?.title);
+    setIsScoreModal(true);
   };
 
   return (
     <div className="max-w-6xl m-auto pl-6 pr-6">
       <Card className="p-6">
         {head && head}
-        <Table aria-label="Example static collection table" removeWrapper isStriped>
+        <Table
+          aria-label="Example static collection table"
+          removeWrapper
+          isStriped
+        >
           <TableHeader>
             <TableColumn>Details</TableColumn>
+            <TableColumn>Rating</TableColumn>
             <TableColumn>Assigned</TableColumn>
-            <TableColumn>Score</TableColumn>
             <TableColumn>Active</TableColumn>
             <TableColumn></TableColumn>
           </TableHeader>
@@ -74,20 +70,11 @@ export const PureTable = ({ head = null }) => {
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell>
-                    <AvatarGroup isBordered>
-                      {project?.students?.map((el) => (
-                        <Avatar size="sm" key={el?.id} src={el?.img} />
-                      ))}
-                    </AvatarGroup>
-                  </TableCell>
                   <TableCell className="whitespace-nowrap">
-                    {project?.score ? (
-                      <b className="text-yellow-500 text-3xl">
-                        {project?.score}/
-                        <span className=" text-sm">
-                          {courseInfo?.score?.project}
-                        </span>
+                    {project?.rate ? (
+                      <b className="text-yellow-500 text-2xl flex items-center gap-2">
+                        {project?.rate}
+                        <HiStar size={26} />
                       </b>
                     ) : (
                       <Chip variant="flat" size="sm" color="secondary">
@@ -95,6 +82,14 @@ export const PureTable = ({ head = null }) => {
                       </Chip>
                     )}
                   </TableCell>
+                  <TableCell>
+                    <AvatarGroup isBordered>
+                      {project?.students?.map((el) => (
+                        <Avatar size="sm" key={el?.id} src={el?.img} />
+                      ))}
+                    </AvatarGroup>
+                  </TableCell>
+
                   <TableCell>
                     <Switch
                       size="sm"
@@ -104,6 +99,15 @@ export const PureTable = ({ head = null }) => {
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-2 w-full justify-end">
+                      <Button
+                        variant="bordered"
+                        size="sm"
+                        // isIconOnly
+                        startContent={<TbScoreboard size={18} />}
+                        onClick={() => handleViewScore(project)}
+                      >
+                        Students
+                      </Button>
                       <Button
                         variant="bordered"
                         size="sm"

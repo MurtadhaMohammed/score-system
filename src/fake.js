@@ -126,7 +126,7 @@ export const projects = [
     description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s `,
     documents: null,
     students,
-    score: 36
+    rate: 3.4,
   },
   {
     id: 2,
@@ -137,6 +137,7 @@ export const projects = [
       "https://i.pravatar.cc/150?u=a042581f4e29026704d",
     ],
     students,
+    rate: 5,
   },
   {
     id: 3,
