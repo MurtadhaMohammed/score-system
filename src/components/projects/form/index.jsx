@@ -8,7 +8,9 @@ import {
   ModalFooter,
   Button,
   Input,
-  Avatar,
+  SelectItem,
+  Select,
+  Textarea,
 } from "@nextui-org/react";
 import { useProjectStore } from "../store";
 import { useAppStore } from "@/store";
@@ -18,29 +20,17 @@ export const PureForm = () => {
     isModal,
     setIsModal,
     id,
-    name,
-    birthDate,
-    phone,
-    email,
-    img,
-    setName,
-    setPhone,
-    setEmail,
-    setBirthDate,
-    setImg,
+    title,
+    description,
+    setDescription,
+    setTitle,
+    setId,
     reset,
   } = useProjectStore();
   const { course } = useAppStore();
 
   const handleSubmit = () => {
-    let data = {
-      name,
-      birthDate,
-      phone,
-      email,
-      img,
-      course,
-    };
+    let data = {title, description, course};
     if (id) console.log("Edit : ", data);
     else console.log("Create : ", data);
   };
@@ -49,59 +39,25 @@ export const PureForm = () => {
     <Modal size="lg" isOpen={isModal} onOpenChange={setIsModal} backdrop="blur">
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1">
-          {id ? "Edit" : "New"} Student
+          {id ? "Edit" : "New"} Project
         </ModalHeader>
         <ModalBody>
-          <div className="flex items-center gap-4">
-            <Avatar size="lg" isBordered src={img} />
-            <Input
-              variant="bordered"
-              className="flex-1"
-              type="text"
-              label="Image Url"
-              placeholder="https://xxxxxx.png"
-              value={img}
-              onChange={(e) => setImg(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-2">
-            <Input
-              variant="bordered"
-              type="text"
-              label="Name"
-              placeholder="Student Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <Input
-              className=" w-2/3"
-              variant="bordered"
-              type="text"
-              label="Phone"
-              placeholder="07xxxxxxxx"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
-
-          <div className="flex gap-2">
-            <Input
-              variant="bordered"
-              type="text"
-              label="Birth Date"
-              placeholder="Ex: 1999/04/30"
-              value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-            />
-            <Input
-              variant="bordered"
-              type="email"
-              label="Email"
-              placeholder="example@mail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          <Input
+            variant="bordered"
+            type="text"
+            label="Title"
+            placeholder="Project Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Textarea
+            variant="bordered"
+            type="text"
+            label="Description"
+            placeholder="Project Details"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </ModalBody>
         <ModalFooter className="mt-6">
           <Button

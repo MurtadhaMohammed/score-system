@@ -22,13 +22,16 @@ import { courses, projects, students } from "@/fake";
 import { useAppStore } from "@/store";
 
 export const PureTable = ({ head = null }) => {
-  const { setIsScoreModal, setId, setTitle } = useProjectStore();
+  const { setIsScoreModal, setIsModal, setId, setTitle, setDescription } =
+    useProjectStore();
   const { course, loading } = useAppStore();
   // let courseInfo = courses.find((el) => el?.id === Number(course));
 
   const handleEdit = (row) => {
-    // setId(row?.id);
-    // setIsModal(true);
+    setId(row?.id);
+    setTitle(row?.title);
+    setDescription(row?.description);
+    setIsModal(true);
   };
   const handleViewScore = (row) => {
     setId(row?.id);

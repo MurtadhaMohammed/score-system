@@ -7,8 +7,10 @@ export const useProjectStore = create((set) => ({
   title: null,
   description: null,
   rate: null,
+  selectedStudents: [],
 
   setIsModal: (isModal) => set({ isModal }),
+  setSelectedStudents: (selectedStudents) => set({ selectedStudents }),
   setIsScoreModal: (isScoreModal) => set({ isScoreModal }),
   setTitle: (title) => set({ title }),
   setDescription: (description) => set({ description }),
@@ -17,5 +19,8 @@ export const useProjectStore = create((set) => ({
   reset: () =>
     set({
       id: null,
+      title: null,
+      description: null,
+      rate: null,
     }),
 }));

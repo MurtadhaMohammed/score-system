@@ -39,10 +39,10 @@ export const Head = () => {
       />
 
       <Button
-        // onClick={() => {
-        //   reset();
-        //   setIsModal(true);
-        // }}
+        onClick={() => {
+          reset();
+          setIsModal(true);
+        }}
         color="primary"
       >
         + New Project
