@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = "mongodb+srv://amwalytech:1234567mm@score-system-main.ekmxeti.mongodb.net/score_system?retryWrites=true&w=majority"
+}
+
+
+
+model Student {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  active    Boolean? @default(false)
+  birthDate String?
+  email     String?
+  name      String?
+  phone     String?
+  img       String?
+}
