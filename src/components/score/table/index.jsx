@@ -61,7 +61,7 @@ export const PureTable = ({ head = null }) => {
                 <TableRow key={link?.id}>
                   <TableCell>
                     <div className="flex gap-2">
-                      <Link target="_blank">
+                      <Link href={`/${link?.linkID}`} target="_blank">
                         <BiLink size={18} />
                       </Link>
                       <b>{link?.linkID}</b>

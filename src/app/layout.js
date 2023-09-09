@@ -1,4 +1,4 @@
-import MainHeader from "@/components/header";
+// import MainHeader from "@/components/header";
 import "./globals.css";
 // import { Inter } from "next/font/google";
 import UIProvider from "./UIProvider";
@@ -37,8 +37,8 @@ export default function RootLayout({ children }) {
     <html lang="en" dir="ltr">
       <body className={`${NotoSansArabic.className} min-h-screen`}>
         <UIProvider>
-        <ProgressBar />
-          <MainHeader />
+          <ProgressBar />
+          {/* <MainHeader /> */}
           {children}
         </UIProvider>
       </body>

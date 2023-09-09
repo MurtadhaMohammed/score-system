@@ -40,32 +40,32 @@ const MainHeader = () => {
           <Spacer />
           <Link
             color="foreground"
-            className={pathname === "/" ? "text-blue-600" : ""}
-            href="/"
+            className={pathname === "/dashboard" ? "text-blue-600" : ""}
+            href="/dashboard"
           >
             Students
           </Link>
 
           <Link
             color="foreground"
-            href="/activities"
-            className={pathname === "/activities" ? "text-blue-600" : ""}
+            href="/dashboard/activities"
+            className={pathname === "/dashboard/activities" ? "text-blue-600" : ""}
           >
             Activities
           </Link>
 
           <Link
             color="foreground"
-            href="/projects"
-            className={pathname === "/projects" ? "text-blue-600" : ""}
+            href="/dashboard/projects"
+            className={pathname === "/dashboard/projects" ? "text-blue-600" : ""}
           >
             Projects
           </Link>
 
           <Link
             color="foreground"
-            href="/score"
-            className={pathname === "/score" ? "text-blue-600" : ""}
+            href="/dashboard/score"
+            className={pathname === "/dashboard/score" ? "text-blue-600" : ""}
           >
             Score
           </Link>
