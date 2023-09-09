@@ -133,7 +133,10 @@ export const PureForm = () => {
                     <div className="flex flex-col">
                       <span className="text-small">{item.title}</span>
                       <span className="text-tiny text-default-400">
-                        {item.info}
+                        <div
+                          className="activity-info"
+                          dangerouslySetInnerHTML={{ __html: item?.info }}
+                        ></div>
                       </span>
                     </div>
                   </div>
@@ -161,3 +164,18 @@ export const PureForm = () => {
     </Modal>
   );
 };
+
+/*
+
+Score links 
+create diynamic link that can view score info or trend chart to the students
+
+
+we have foure view of this link
+
+1 - view the trend students
+2 - view all score by select the activities
+3 - view project score 
+4 - view project trend 
+
+*/
