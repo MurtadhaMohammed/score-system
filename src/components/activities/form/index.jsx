@@ -74,9 +74,9 @@ export const PureForm = () => {
               className="w-40"
               variant="bordered"
               isClearable
-              selectedKeys={[type]}
-              // defaultValue={type}
-              // value={type}
+              // selectedKeys={type}
+              // defaultValue={ty}
+              value={type}
               onChange={(e) => setType(e.target.value)}
             >
               <SelectItem key={"QUIZ"} value={"QUIZ"}>

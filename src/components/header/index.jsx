@@ -61,6 +61,14 @@ const MainHeader = () => {
           >
             Projects
           </Link>
+
+          <Link
+            color="foreground"
+            href="/score"
+            className={pathname === "/score" ? "text-blue-600" : ""}
+          >
+            Score
+          </Link>
         </div>
 
         <div className="flex gap-6">

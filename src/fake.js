@@ -33,7 +33,7 @@ export const students = [
   },
 ];
 
-export const activities = [
+export const activitiesList = [
   {
     id: 1,
     title: "Session Three (JsavScript Quize)",
@@ -58,60 +58,70 @@ export const activities = [
 
 export const scoreList = [
   {
+    id: 1,
     name: "Ali Sattar",
     phone: "77719887676",
     img: "https://i.pravatar.cc/150?u=a04258114e29026302d",
     score: "18",
   },
   {
+    id: 2,
     name: "Noor Jasim",
     phone: "77719887676",
     img: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
     score: "20",
   },
   {
+    id: 3,
     name: "Maria Iraq",
     phone: "77719887676",
     img: "https://i.pravatar.cc/150?u=a04258114e29026302d",
     score: "12",
   },
   {
+    id: 4,
     name: "Salim Soso",
     phone: "77719887676",
     img: "https://i.pravatar.cc/150?u=a04258114e29026708c",
     score: "8",
   },
   {
+    id: 5,
     name: "Murtadha Abed",
     phone: "77719887676",
     img: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
     score: "10",
   },
   {
+    id: 6,
     name: "Ali Nouri",
     phone: "77719887676",
     img: "https://i.pravatar.cc/150?u=a04258114e29026702d",
     score: "11",
   },
   {
+    id: 7,
     name: "Ahmed Ali",
     phone: "77719887676",
     img: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
     score: "15",
   },
   {
+    id: 8,
     name: "Abbas Ali",
     phone: "77719887676",
     img: "https://i.pravatar.cc/300?u=a042581f4f29026707d",
     score: "19",
   },
   {
+    id: 9,
     name: "Zainab Ahmed",
     phone: "77719887676",
     img: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
     score: "2",
   },
   {
+    id: 10,
     name: "Nabaa Abbas",
     phone: "77719887676",
     img: "https://i.pravatar.cc/300?u=a042581f4e29026710d",
@@ -145,5 +155,35 @@ export const projects = [
     description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s `,
     documents: ["https://i.pravatar.cc/300?u=a042581f4e29026710d"],
     students,
+  },
+];
+
+export const scoreLinks = [
+  {
+    id: 1,
+    linkID: "FdsdDs021",
+    description: "Quiz Score For last week",
+    type: "ACTIVITY",
+    viewType: "SCORE", // SCORE || TREND
+    activities: "1,2",
+    active: true,
+  },
+  {
+    id: 2,
+    linkID: "OIsk821",
+    description: "Score For last week",
+    type: "ACTIVITY",
+    viewType: "TREND", // SCORE || TREND
+    activities: null,
+    active: true,
+  },
+  {
+    id: 3,
+    linkID: "HDd8s021",
+    description: "Projects Score For last week",
+    type: "PROJECT",
+    viewType: "SCORE", // SCORE || TREND
+    activities: null,
+    active: false,
   },
 ];

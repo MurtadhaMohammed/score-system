@@ -16,7 +16,7 @@ import { BiEdit, BiTrash } from "react-icons/bi";
 import { AiOutlineFundView } from "react-icons/ai";
 import { LuImport } from "react-icons/lu";
 import { useActivitiesStore } from "../store";
-import { activities } from "@/fake";
+import { activitiesList } from "@/fake";
 import { useAppStore } from "@/store";
 import fileDialog from "file-dialog";
 import csvFileToJSON from "@/helper/csvFileToJSON";
@@ -90,7 +90,7 @@ export const PureTable = ({ head = null }) => {
             }
           >
             {course &&
-              activities?.map((activity) => (
+              activitiesList?.map((activity) => (
                 <TableRow key={activity?.id}>
                   <TableCell>
                     <Chip
