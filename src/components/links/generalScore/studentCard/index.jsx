@@ -28,7 +28,7 @@ const StudentCard = ({ data, type, course, isCrown = false }) => {
         />
         <b className="text-yellow-500 text-3xl">
           {score}/
-          <span className="text-sm">{type === "QUIZ" ? quiz : task}</span>
+          <span className="text-sm">{task + quiz}</span>
         </b>
       </div>
     </Card>
