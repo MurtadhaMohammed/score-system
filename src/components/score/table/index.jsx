@@ -22,6 +22,8 @@ const typColor = {
   ACTIVITY: "secondary",
   GENERAL: "success",
   PROJECTS: "primary",
+  PROJECTS_RATE: "danger",
+  FINAL: "warning",
 };
 
 export const PureTable = ({ head = null }) => {
@@ -67,8 +69,8 @@ export const PureTable = ({ head = null }) => {
                   </TableCell>
                   <TableCell>{link?.description}</TableCell>
                   <TableCell>
-                    <Chip variant="bordered" color={typColor[link?.type]}>
-                      {link?.type?.toLowerCase()}
+                    <Chip variant="flat" color={typColor[link?.type]}>
+                      {link?.type}
                     </Chip>
                   </TableCell>
 

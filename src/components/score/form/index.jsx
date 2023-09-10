@@ -67,8 +67,8 @@ export const PureForm = () => {
               isClearable
               selectedKeys={[type]}
               onChange={(e) => {
-                setType(e.target.value)
-                setActivity(null)
+                setType(e.target.value);
+                setActivity(null);
               }}
             >
               <SelectItem key={"ACTIVITY"} value={"ACTIVITY"}>
@@ -79,6 +79,9 @@ export const PureForm = () => {
               </SelectItem>
               <SelectItem key={"PROJECTS"} value={"PROJECTS"}>
                 Projects
+              </SelectItem>
+              <SelectItem key={"PROJECTS_RATE"} value={"PROJECTS_RATE"}>
+                PROJECTS_RATE
               </SelectItem>
               <SelectItem key={"FINAL"} value={"FINAL"}>
                 Final
