@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      rotate: {
+        '30': '30deg',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

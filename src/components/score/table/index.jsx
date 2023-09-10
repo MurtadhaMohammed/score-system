@@ -18,23 +18,22 @@ import { useScoreStore } from "../store";
 import { scoreLinks } from "@/fake";
 import { useAppStore } from "@/store";
 
+const typColor = {
+  ACTIVITY: "secondary",
+  GENERAL: "success",
+  PROJECTS: "primary",
+};
+
 export const PureTable = ({ head = null }) => {
-  const {
-    setIsModal,
-    setId,
-    setDescription,
-    setViewType,
-    setType,
-    setActivities,
-  } = useScoreStore();
+  const { setIsModal, setId, setDescription, setType, setActivity } =
+    useScoreStore();
   const { course, loading } = useAppStore();
 
   const handleEdit = (row) => {
     setId(row?.id);
     setDescription(row?.description);
-    setViewType(row?.viewType);
     setType(row?.type);
-    setActivities(row?.activities);
+    setActivity(row?.activity);
     setIsModal(true);
   };
 
@@ -47,7 +46,6 @@ export const PureTable = ({ head = null }) => {
             <TableColumn>LinkID</TableColumn>
             <TableColumn>Description</TableColumn>
             <TableColumn>Type</TableColumn>
-            <TableColumn>View Type</TableColumn>
             <TableColumn>Active</TableColumn>
             <TableColumn></TableColumn>
           </TableHeader>
@@ -69,21 +67,8 @@ export const PureTable = ({ head = null }) => {
                   </TableCell>
                   <TableCell>{link?.description}</TableCell>
                   <TableCell>
-                    <Chip
-                      variant="flat"
-                      color={
-                        link?.type === "ACTIVITY" ? "secondary" : "success"
-                      }
-                    >
+                    <Chip variant="bordered" color={typColor[link?.type]}>
                       {link?.type?.toLowerCase()}
-                    </Chip>
-                  </TableCell>
-                  <TableCell>
-                    <Chip
-                      variant="bordered"
-                      color={link?.viewType === "SCORE" ? "warning" : "danger"}
-                    >
-                      {link?.viewType?.toLowerCase()}
                     </Chip>
                   </TableCell>
 

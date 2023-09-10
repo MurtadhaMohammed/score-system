@@ -5,13 +5,11 @@ export const useScoreStore = create((set) => ({
   id: null,
   description: null,
   type: null,
-  viewType: null, // SCORE || TREND || PROJECT
-  activities: null,
+  activity: null,
   setIsModal: (isModal) => set({ isModal }),
   setDescription: (description) => set({ description }),
   setType: (type) => set({ type }),
-  setViewType: (viewType) => set({ viewType }),
-  setActivities: (activities) => set({ activities }),
+  setActivity: (activity) => set({ activity }),
 
   setId: (id) => set({ id }),
   reset: () =>
@@ -19,7 +17,6 @@ export const useScoreStore = create((set) => ({
       id: null,
       description: null,
       type: null,
-      viewType: null,
-      activities: null,
+      activity: null,
     }),
 }));

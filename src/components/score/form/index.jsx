@@ -7,7 +7,6 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Input,
   SelectItem,
   Select,
   Textarea,
@@ -25,13 +24,11 @@ export const PureForm = () => {
     id,
     reset,
     description,
-    activities,
-    viewType,
+    activity,
     type,
     setDescription,
-    setViewType,
     setType,
-    setActivities,
+    setActivity,
   } = useScoreStore();
   const { course } = useAppStore();
 
@@ -39,8 +36,7 @@ export const PureForm = () => {
     let data = {
       description,
       type,
-      viewType,
-      activities,
+      activity,
     };
     if (id) console.log("Edit : ", data);
     else console.log("Create : ", data);
@@ -70,30 +66,22 @@ export const PureForm = () => {
               labelPlacement="outside"
               isClearable
               selectedKeys={[type]}
-              onChange={(e) => setType(e.target.value)}
+              onChange={(e) => {
+                setType(e.target.value)
+                setActivity(null)
+              }}
             >
               <SelectItem key={"ACTIVITY"} value={"ACTIVITY"}>
                 Activity
               </SelectItem>
-              <SelectItem key={"PROJECT"} value={"PROJECT"}>
-                Project
+              <SelectItem key={"GENERAL"} value={"GENERAL"}>
+                General
               </SelectItem>
-            </Select>
-            <Select
-              label="View Type"
-              placeholder="View Type"
-              className="w-full"
-              variant="bordered"
-              labelPlacement="outside"
-              isClearable
-              selectedKeys={[viewType]}
-              onChange={(e) => setViewType(e.target.value)}
-            >
-              <SelectItem key={"SCORE"} value={"SCORE"}>
-                Score
+              <SelectItem key={"PROJECTS"} value={"PROJECTS"}>
+                Projects
               </SelectItem>
-              <SelectItem key={"TREND"} value={"TREND"}>
-                Trend
+              <SelectItem key={"FINAL"} value={"FINAL"}>
+                Final
               </SelectItem>
             </Select>
           </div>
@@ -103,25 +91,37 @@ export const PureForm = () => {
               label="Activities"
               variant="bordered"
               isMultiline={true}
-              selectionMode="multiple"
+              // selectionMode="multiple"
               placeholder="Select Activity"
               labelPlacement="outside"
-              selectedKeys={activities}
-              onChange={(e) => setActivities(e.target.value)}
+              selectedKeys={activity}
+              onChange={(e) => setActivity(e.target.value)}
               classNames={{
-                base: "max-w-full",
+                base: "max-w-full mt-4",
                 trigger: "min-h-unit-12 py-2",
               }}
               renderValue={(items) => {
-                return (
-                  <div className="flex flex-wrap gap-2">
-                    {items.map((item, i) => (
-                      <Chip key={item.key}>
-                        {i + 1} - {item.data.title}
-                      </Chip>
-                    ))}
+                return items.map((item) => (
+                  <div key={item.key} className="flex items-start gap-2">
+                    <Chip
+                      variant="dot"
+                      color={chipColor[item?.data?.type]}
+                      size="md"
+                      className="mt-1"
+                    >
+                      {item?.data?.type?.toLowerCase()}
+                    </Chip>
+                    <div className="flex flex-col">
+                      <span>{item.data.title}</span>
+                      <span className="text-default-500 text-tiny">
+                        <div
+                          className="activity-info"
+                          dangerouslySetInnerHTML={{ __html: item?.data?.info }}
+                        ></div>
+                      </span>
+                    </div>
                   </div>
-                );
+                ));
               }}
             >
               {(item) => (
