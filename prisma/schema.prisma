@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+}
+
+model Course {
+  id          String      @id @default(uuid())
+  active      Boolean?    @default(true)
+  description String?
+  title       String?
+  grade       Grades?     @relation(fields: [gradeId], references: [id])
+  gradeId     String?     @unique
+  student     Student[]
+  projects    Project[]
+  Activitiy   Activitiy[]
+  Score       Score[]
+}
+
+model Grades {
+  id String @id @default(uuid())
+
+  attendance Int
+  quiz       Int
+  task       Int
+  project    Int
+
+  Course Course?
+}
+
+model Student {
+  id               String             @id @default(uuid())
+  active           Boolean?           @default(true)
+  birthDate        String?
+  email            String?
+  name             String?
+  phone            String?            @unique
+  img              String?
+  courseId         String
+  course           Course             @relation(fields: [courseId], references: [id])
+  Project          Project?           @relation(fields: [projectId], references: [id])
+  projectId        String?
+  StudentActivitiy StudentActivitiy[]
+  StduentProject   StduentProject[]
+}
+
+model Project {
+  id             String           @id @default(uuid())
+  active         Boolean?         @default(true)
+  description    String?
+  title          String?
+  rate           Float?
+  documents      String[]
+  students       Student[]
+  Course         Course           @relation(fields: [courseId], references: [id])
+  courseId       String
+  StduentProject StduentProject[]
+}
+
+model Score {
+  id          String     @id @default(uuid())
+  active      Boolean?   @default(true)
+  description String?
+  type        String?
+  linkID      String?    @unique
+  activity    Activitiy? @relation(fields: [activitiyId], references: [id])
+  activitiyId String?    @unique
+  courseId    String?
+  course      Course?    @relation(fields: [courseId], references: [id])
+}
+
+model Activitiy {
+  id               String             @id @default(uuid())
+  active           Boolean?           @default(true)
+  finish           Boolean?           @default(false)
+  info             String?
+  title            String?
+  date             String?
+  type             ActivityType?
+  results          Json[]
+  courseId         String
+  course           Course             @relation(fields: [courseId], references: [id])
+  StudentActivitiy StudentActivitiy[]
+  Score            Score?
+  scoreId          String?
+}
+
+model StudentActivitiy {
+  id String @id @default(uuid())
+
+  studentPhone String
+  student      Student   @relation(fields: [studentPhone], references: [phone])
+  activitiyId  String
+  activitiy    Activitiy @relation(fields: [activitiyId], references: [id])
+
+  score Int
+}
+
+model StduentProject {
+  id String @id @default(uuid())
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+
+  score Int
+}
+
+enum ScoreType {
+  ACTIVITY
+  PROJECTS
+  GENERAL
+  FINAL
+  PROJECTS_RATE
+}
+
+enum ActivityType {
+  QUIZ
+  TASK
+}
