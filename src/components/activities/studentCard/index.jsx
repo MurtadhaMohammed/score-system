@@ -5,12 +5,14 @@ import { useAppStore } from "@/stores/app";
 
 const StudentCard = ({ data, type }) => {
   const { course } = useAppStore();
-  console.log(data);
+  console.log("card data", data);
   let { score, student } = data;
 
   // const { name, phone, img } = student;
 
   const { quiz, task } = course.grade;
+
+  if ((!data.name || !data.phone) && !student) return null;
 
   return (
     <Card className="p-5 w-full" shadow="sm">

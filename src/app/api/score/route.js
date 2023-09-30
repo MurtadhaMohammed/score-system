@@ -8,23 +8,28 @@ const randomString = () => {
 export async function POST(req) {
   const request = await req.json();
 
-  await prisma.score.create({
-    data: {
-      active: true,
-      activity: {
-        connect: {
-          id: request.activityId,
-        },
-      },
-      description: request.description,
-      linkID: randomString(),
-      type: request.type,
-      course: {
-        connect: {
-          id: request.courseId,
-        },
+  const data = {
+    active: true,
+    description: request.description,
+    linkID: randomString(),
+    type: request.type,
+    course: {
+      connect: {
+        id: request.courseId,
       },
     },
+  };
+
+  if (request.activityId) {
+    data.activity = {
+      connect: {
+        id: request.activityId,
+      },
+    };
+  }
+
+  await prisma.score.create({
+    data,
   });
   return NextResponse.json({ req });
 }
