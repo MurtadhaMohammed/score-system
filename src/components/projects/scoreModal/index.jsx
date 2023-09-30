@@ -95,10 +95,17 @@ export const ScroeModal = () => {
     setStudentIds(ids);
   }, [selectedStudents]);
 
+  // Make a "renderList" function but make it not render the selected students
+
   const renderList = () => {
-    let list = students?.filter(
-      (el) => !selectedStudents?.find((item) => item?.id === el?.id)
-    );
+    let list = students?.filter((el) => !studentIds?.includes(el?.id));
+
+    return list;
+  };
+
+  const renderStudents = () => {
+    // Render a list of NOT selecetd students
+    let list = students?.filter((el) => !studentIds?.includes(el?.id));
 
     return list;
   };
@@ -134,7 +141,7 @@ export const ScroeModal = () => {
               selectedKeys={[value]}
               onChange={(e) => setValue(e.target.value)}
             >
-              {students.map((s) => (
+              {renderStudents().map((s) => (
                 <SelectItem key={s.id} textValue={s.name}>
                   <div className="flex gap-2 items-center">
                     <Avatar
