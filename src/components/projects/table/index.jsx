@@ -16,7 +16,7 @@ import {
   Chip,
 } from "@nextui-org/react";
 
-import { BiEdit, BiTrash } from "react-icons/bi";
+import { BiEdit } from "react-icons/bi";
 import { HiStar } from "react-icons/hi";
 import { TbScoreboard } from "react-icons/tb";
 import { useProjectStore } from "../store";
@@ -32,9 +32,8 @@ export const PureTable = ({ head = null }) => {
     setTitle,
     setDescription,
     projects,
-    setProjects,
   } = useProjectStore();
-  const { loading, setLoading, course } = useAppStore();
+  const { loading, setLoading, setUpdate } = useAppStore();
 
   const handleEdit = (row) => {
     setId(row?.id);
@@ -48,25 +47,12 @@ export const PureTable = ({ head = null }) => {
     setIsScoreModal(true);
   };
 
-  const getData = async () => {
-    setLoading(true);
-
-    const { data: projectsData } = await axios.get(
-      `/projects?courseId=${course.id}`
-    );
-
-    setProjects(projectsData.data);
-
-    setLoading(false);
-  };
-
   const onSwitchClick = async (id) => {
     setLoading(true);
 
     await axios.patch(`/projects/${id}`);
 
-    await getData();
-
+    setUpdate();
     setLoading(false);
   };
 
@@ -159,7 +145,7 @@ export const PureTable = ({ head = null }) => {
                     >
                       <DeleteButton
                         link={`/projects/${project.id}`}
-                        fetchData={getData}
+                        fetchData={() => setUpdate()}
                       />
                     </Button>
                   </div>

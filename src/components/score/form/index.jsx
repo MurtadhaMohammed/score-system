@@ -17,6 +17,7 @@ import { useScoreStore } from "../store";
 import { useAppStore } from "@/stores/app";
 import { activitiesList } from "@/fake";
 import { chipColor } from "@/components/activities";
+import { useEffect, useState } from "react";
 
 export const PureForm = () => {
   const {
@@ -30,9 +31,9 @@ export const PureForm = () => {
     setDescription,
     setType,
     setActivity,
-    setScores,
   } = useScoreStore();
-  const { course, setLoading, loading } = useAppStore();
+  const { course, setLoading, loading, setUpdate } = useAppStore();
+  const [activities, setActivities] = useState([]);
 
   const handleSubmit = async () => {
     let data = {
@@ -47,13 +48,19 @@ export const PureForm = () => {
     if (id) await axios.put(`/score/${id}`, data);
     else await axios.post("/score", data);
 
-    const score = await axios.get("/score?courseId=" + course.id);
-    setScores(score.data.data);
-
+    setUpdate();
     setLoading(false);
-
     setIsModal(false);
   };
+
+  const loadActivites = async () => {
+    const res = await axios.get(`/activity?courseId=${course.id}`);
+    setActivities(res?.data?.data);
+  };
+
+  useEffect(() => {
+    if (type === "ACTIVITY" && activities?.length === 0) loadActivites();
+  }, [type]);
 
   return (
     <Modal size="lg" isOpen={isModal} onOpenChange={setIsModal} backdrop="blur">
@@ -103,7 +110,7 @@ export const PureForm = () => {
           {activity}
           {type === "ACTIVITY" && (
             <Select
-              items={course.Activitiy}
+              items={activities}
               label="Activities"
               variant="bordered"
               isMultiline={true}

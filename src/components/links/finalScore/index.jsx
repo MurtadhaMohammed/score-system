@@ -1,21 +1,61 @@
 "use client";
 
-import { chipColor } from "@/components/activities";
-import { scoreList } from "@/fake";
 import { Chip } from "@nextui-org/react";
 import StudentCard from "./studentCard";
 import { TbCalendarTime } from "react-icons/tb";
 import { PiStudent } from "react-icons/pi";
+import { useAppStore } from "@/stores";
+import { useEffect, useState } from "react";
+import { axios } from "@/lib";
+import { SkeletonLinks } from "..";
+import dayjs from "dayjs";
 
 function largestScore(arr = []) {
   arr = arr.sort((a, b) => Number(b?.score) - Number(a?.score));
   let max = arr[0];
+  if (Number(max.score) === 0) return;
   return Number(max.score);
 }
 
+function studentsList({ students, totalActivity }) {
+  let list = [];
+
+  for (const s of students) {
+    let activitiyScore = s.StudentActivitiy.filter(
+      (el) => el?.activitiy?.active
+    ).reduce((acc, curr) => {
+      return acc + curr.score;
+    }, 0);
+
+    activitiyScore = activitiyScore / totalActivity;
+
+    let projectScore = 0;
+    if (s.StduentProject[0]?.project?.active) {
+      projectScore = s.StduentProject[0]?.score;
+    }
+    list.push({
+      ...s,
+      score: (projectScore + activitiyScore + s.evaScore).toFixed(1),
+    });
+  }
+
+  return list?.sort((a, b) => Number(b?.score) - Number(a?.score)) || [];
+}
+
 export const FinalScore = ({ data }) => {
-  let list =
-    [...data.list?.sort((a, b) => Number(b?.score) - Number(a?.score))] || [];
+  const { loading, setLoading, createdAt } = useAppStore();
+  const [list, setList] = useState([]);
+  const { courseId, course } = data?.score;
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`/score/final/${courseId}`).then((res) => {
+      setList(studentsList(res?.data?.data));
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) return <SkeletonLinks total={data?.totalStudents} />;
 
   return (
     <div className="max-w-8xl m-auto pl-6 pr-6 md:pl-10 md:pr-10">
@@ -27,7 +67,7 @@ export const FinalScore = ({ data }) => {
             </Chip>
             <div className="flex gap-2 items-center">
               <TbCalendarTime className="text-gray-500 -mt-1" size={18} />
-              <p className="text-gray-500">2024 , Jun 03</p>
+              <p className="text-gray-500"> {dayjs(createdAt).format("YYYY, ddd MM")}</p>
             </div>
           </div>
           <b className="sm:text-lg">
@@ -37,7 +77,7 @@ export const FinalScore = ({ data }) => {
         <div className="flex gap-2 items-center mr-2 md:ml-4">
           <PiStudent className="text-gray-500 -mt-1" size={18} />
           <p className="text-gray-500">
-            <b>30</b> of Students
+            <b>{list?.length}</b> of Students
           </p>
         </div>
       </div>
@@ -47,7 +87,7 @@ export const FinalScore = ({ data }) => {
           <StudentCard
             key={i}
             data={el}
-            course={1}
+            course={course}
             isCrown={Number(el?.score) === largestScore(list)}
           />
         ))}

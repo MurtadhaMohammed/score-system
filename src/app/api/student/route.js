@@ -32,6 +32,9 @@ export async function GET(req, { query }) {
     where: {
       courseId,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   return NextResponse.json({ data });

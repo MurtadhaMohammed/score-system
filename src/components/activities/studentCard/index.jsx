@@ -5,10 +5,7 @@ import { useAppStore } from "@/stores/app";
 
 const StudentCard = ({ data, type }) => {
   const { course } = useAppStore();
-  console.log("card data", data);
   let { score, student } = data;
-
-  // const { name, phone, img } = student;
 
   const { quiz, task } = course.grade;
 
@@ -22,7 +19,7 @@ const StudentCard = ({ data, type }) => {
           name={data.name ?? data.student.name}
           description={data.phone ?? data.student.phone}
         />
-        <b className="text-yellow-500 text-3xl">
+        <b className="text-yellow-500 text-2xl">
           {score}/
           <span className=" text-sm">{type === "QUIZ" ? quiz : task}</span>
         </b>

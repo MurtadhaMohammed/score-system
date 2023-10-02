@@ -10,7 +10,7 @@ import { axios } from "@/lib";
 
 export default function Activities() {
   const { setActivities, typeQuery } = useActivitiesStore();
-  const { setLoading, course } = useAppStore();
+  const { setLoading, course, isUpdate } = useAppStore();
 
   useEffect(() => {
     if (!course) return;
@@ -23,12 +23,12 @@ export default function Activities() {
       );
 
       setActivities(res.data.data);
-
+     
       setLoading(false);
     };
 
     getData().then();
-  }, [course]);
+  }, [course, typeQuery, isUpdate]);
 
   return (
     <main>

@@ -7,7 +7,7 @@ import { useScoreStore } from "@/components/score/store";
 import { useAppStore } from "@/stores";
 
 export default function Score() {
-  const { setLoading, course } = useAppStore();
+  const { setLoading, course, isUpdate } = useAppStore();
   const { setScores } = useScoreStore();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function Score() {
     };
 
     getData().then();
-  }, [course]);
+  }, [course, isUpdate]);
 
   return (
     <main className="min-h-screen">

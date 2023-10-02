@@ -56,132 +56,144 @@ export async function DELETE(req, { params }) {
 export async function GET(req, { params }) {
   const { id } = params;
 
-  let response;
+  // let response;
 
-  const data = await prisma.score.findUnique({
+  const score = await prisma.score.findUnique({
     where: {
       linkID: id,
     },
     include: {
       activity: true,
+      course: {
+        include: {
+          grade: true,
+        },
+      },
     },
   });
 
-  const students = await prisma.student.findMany({
+  const totalStudents = await prisma.student.count({
     where: {
-      courseId: data.courseId,
+      courseId: score?.courseId,
+      active: true,
     },
   });
 
-  if (data.type === "GENERAL") {
-    const studentScore = [];
+  // const students = await prisma.student.findMany({
+  //   where: {
+  //     courseId: data.courseId,
+  //   },
+  // });
 
-    for (const s of students) {
-      const tasksAndQuizzes = await prisma.studentActivitiy.findMany({
-        where: {
-          studentPhone: s.phone,
-        },
-      });
+  // if (data.type === "GENERAL") {
+  //   const studentScore = [];
 
-      let score = tasksAndQuizzes.reduce((acc, curr) => {
-        return acc + curr.score;
-      }, 0);
+  //   for (const s of students) {
+  //     const tasksAndQuizzes = await prisma.studentActivitiy.findMany({
+  //       where: {
+  //         studentPhone: s.phone,
+  //       },
+  //     });
 
-      studentScore.push({
-        ...s,
-        score: score / tasksAndQuizzes.length,
-      });
-    }
+  //     let score = tasksAndQuizzes.reduce((acc, curr) => {
+  //       return acc + curr.score;
+  //     }, 0);
 
-    response = studentScore;
-  }
+  //     studentScore.push({
+  //       ...s,
+  //       score: score / tasksAndQuizzes.length,
+  //     });
+  //   }
 
-  if (data.type === "ACTIVITY") {
-    const studentScore = [];
+  //   response = studentScore;
+  // }
 
-    for (const s of students) {
-      const tasksAndQuizzes = await prisma.studentActivitiy.findFirst({
-        where: {
-          studentPhone: s.phone,
-          activitiy: {
-            type: data.activity.type,
-            id: data.activitiyId,
-          },
-        },
-      });
+  // if (data.type === "ACTIVITY") {
+  //   const studentScore = [];
 
-      // let score = tasksAndQuizzes.reduce((acc, curr) => {
-      //   return acc + curr.score;
-      // }, 0);
+  //   for (const s of students) {
+  //     const tasksAndQuizzes = await prisma.studentActivitiy.findFirst({
+  //       where: {
+  //         studentPhone: s.phone,
+  //         activitiy: {
+  //           type: data.activity.type,
+  //           id: data.activitiyId,
+  //         },
+  //       },
+  //     });
 
-      studentScore.push({
-        ...s,
-        score: tasksAndQuizzes?.score ?? 0,
-      });
-    }
+  //     // let score = tasksAndQuizzes.reduce((acc, curr) => {
+  //     //   return acc + curr.score;
+  //     // }, 0);
 
-    response = studentScore;
-  }
+  //     studentScore.push({
+  //       ...s,
+  //       score: tasksAndQuizzes?.score ?? 0,
+  //     });
+  //   }
 
-  if (data.type === "PROJECTS") {
-    const studentScore = [];
+  //   response = studentScore;
+  // }
 
-    for (const s of students) {
-      const projects = await prisma.stduentProject.findMany({
-        where: {
-          studentId: s.id,
-        },
-      });
+  // if (data.type === "PROJECTS") {
+  //   const studentScore = [];
 
-      let score = projects.reduce((acc, curr) => {
-        return acc + curr.score;
-      }, 0);
+  //   for (const s of students) {
+  //     const projects = await prisma.stduentProject.findMany({
+  //       where: {
+  //         studentId: s.id,
+  //       },
+  //     });
 
-      studentScore.push({
-        ...s,
-        score: score / projects.length,
-      });
-    }
+  //     let score = projects.reduce((acc, curr) => {
+  //       return acc + curr.score;
+  //     }, 0);
 
-    response = studentScore;
-  }
+  //     studentScore.push({
+  //       ...s,
+  //       score: score / projects.length,
+  //     });
+  //   }
 
-  if (data.type === "FINAL") {
-    const studentScore = [];
+  //   response = studentScore;
+  // }
 
-    for (const s of students) {
-      const tasksAndQuizzes = await prisma.studentActivitiy.findMany({
-        where: {
-          studentPhone: s.phone,
-        },
-      });
+  // if (data.type === "FINAL") {
+  //   const studentScore = [];
 
-      const projects = await prisma.stduentProject.findMany({
-        where: {
-          studentId: s.id,
-        },
-      });
+  //   for (const s of students) {
+  //     const tasksAndQuizzes = await prisma.studentActivitiy.findMany({
+  //       where: {
+  //         studentPhone: s.phone,
+  //       },
+  //     });
 
-      let score = tasksAndQuizzes.reduce((acc, curr) => {
-        return acc + curr.score;
-      }, 0);
+  //     const projects = await prisma.stduentProject.findMany({
+  //       where: {
+  //         studentId: s.id,
+  //       },
+  //     });
 
-      let score2 = projects.reduce((acc, curr) => {
-        return acc + curr.score;
-      }, 0);
+  //     let score = tasksAndQuizzes.reduce((acc, curr) => {
+  //       return acc + curr.score;
+  //     }, 0);
 
-      studentScore.push({
-        ...s,
-        score: (score + score2) / (projects.length + tasksAndQuizzes.length),
-      });
-    }
+  //     let score2 = projects.reduce((acc, curr) => {
+  //       return acc + curr.score;
+  //     }, 0);
 
-    response = studentScore;
-  }
+  //     studentScore.push({
+  //       ...s,
+  //       score: (score + score2) / (projects.length + tasksAndQuizzes.length),
+  //     });
+  //   }
+
+  //   response = studentScore;
+  // }
   return NextResponse.json({
     data: {
-      list: response,
-      score: data,
+      score,
+      totalStudents,
     },
   });
 }

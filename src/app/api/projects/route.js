@@ -22,19 +22,12 @@ export async function GET(req, { params, query }) {
   const url = new URL(req.url);
   const searchParams = new URLSearchParams(url.search);
   const courseId = searchParams.get("courseId");
-
-  // const students = await prisma.stduentProject.findMany({
-  //   where: {
-  //     projectId: params.id,
-  //   },
-  //   include: {
-  //     student: true,
-  //   },
-  // });
+  let active = searchParams.get("active") || undefined;
 
   const data = await prisma.project.findMany({
     where: {
       courseId,
+      active: active === undefined ? undefined : active === "true", 
     },
     include: {
       StduentProject: {
@@ -42,6 +35,9 @@ export async function GET(req, { params, query }) {
           student: true,
         },
       },
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 
@@ -53,8 +49,6 @@ export async function GET(req, { params, query }) {
       };
     });
   });
-
-  console.log("project data", data);
 
   return NextResponse.json({ data });
 }

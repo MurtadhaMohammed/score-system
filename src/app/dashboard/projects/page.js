@@ -8,7 +8,7 @@ import { useAppStore } from "@/stores";
 import { useProjectStore } from "@/components/projects/store";
 
 export default function Projects() {
-  const { course, setLoading } = useAppStore();
+  const { course, setLoading, isUpdate } = useAppStore();
   const { setProjects } = useProjectStore();
 
   const getData = async () => {
@@ -24,7 +24,7 @@ export default function Projects() {
 
   useEffect(() => {
     getData();
-  }, [course]);
+  }, [course, isUpdate]);
 
   return (
     <main>

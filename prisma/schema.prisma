@@ -28,6 +28,7 @@ model Course {
   projects    Project[]
   Activitiy   Activitiy[]
   Score       Score[]
+  createdAt   DateTime    @default(now())
 }
 
 model Grades {
@@ -37,8 +38,10 @@ model Grades {
   quiz       Int
   task       Int
   project    Int
+  evaScore   Int @default(10)
 
-  Course Course?
+  Course    Course?
+  createdAt DateTime @default(now())
 }
 
 model Student {
@@ -47,6 +50,7 @@ model Student {
   birthDate        String?
   email            String?
   name             String?
+  evaScore         Float              @default(0)
   phone            String?            @unique
   img              String?
   courseId         String
@@ -55,6 +59,7 @@ model Student {
   projectId        String?
   StudentActivitiy StudentActivitiy[]
   StduentProject   StduentProject[]
+  createdAt        DateTime           @default(now())
 }
 
 model Project {
@@ -68,6 +73,7 @@ model Project {
   Course         Course           @relation(fields: [courseId], references: [id])
   courseId       String
   StduentProject StduentProject[]
+  createdAt      DateTime         @default(now())
 }
 
 model Score {
@@ -80,6 +86,7 @@ model Score {
   activitiyId String?    @unique
   courseId    String?
   course      Course?    @relation(fields: [courseId], references: [id])
+  createdAt   DateTime   @default(now())
 }
 
 model Activitiy {
@@ -96,6 +103,7 @@ model Activitiy {
   StudentActivitiy StudentActivitiy[]
   Score            Score?
   scoreId          String?
+  createdAt        DateTime           @default(now())
 }
 
 model StudentActivitiy {
@@ -106,7 +114,8 @@ model StudentActivitiy {
   activitiyId  String
   activitiy    Activitiy @relation(fields: [activitiyId], references: [id])
 
-  score Int
+  score     Int
+  createdAt DateTime @default(now())
 }
 
 model StduentProject {
@@ -117,7 +126,8 @@ model StduentProject {
   projectId String
   project   Project @relation(fields: [projectId], references: [id])
 
-  score Int
+  score     Int
+  createdAt DateTime @default(now())
 }
 
 enum ScoreType {

@@ -1,12 +1,6 @@
 "use client";
 import MainHeader from "@/components/header";
-import {
-  LoginButton,
-  LogoutButton,
-  ProfileButton,
-  RegisterButton,
-} from "@/components/buttons/authButton";
-import { SessionProvider, useSession, signIn } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 
 import "./globals.css";
 // import { Inter } from "next/font/google";

@@ -4,28 +4,24 @@ import { Button, Card, User } from "@nextui-org/react";
 import { HiOutlineTrash } from "react-icons/hi";
 import { useProjectStore } from "../store";
 import { useAppStore } from "@/stores/app";
-import { courses } from "@/fake";
 
 const StudentCard = ({ data }) => {
   let { id, score, name, phone, img } = data;
   const { selectedStudents, setSelectedStudents } = useProjectStore();
   const { course } = useAppStore();
-  let courseInfo = courses.find((el) => el?.id === Number(course));
-  let maxScore = courseInfo?.score?.project;
+  let maxScore = course.grade?.project;
 
   const handleRemove = () => {
-    console.log(selectedStudents);
     setSelectedStudents(selectedStudents?.filter((el) => el?.id !== id));
   };
 
   const handleScore = (e) => {
     let value = e.target.value;
-    let index = selectedStudents?.findIndex((el) => el?.id === Number(id));
+    let index = selectedStudents?.findIndex((el) => el?.id === id);
     let newArr = [...selectedStudents];
     if (Number(value) > maxScore) data.score = maxScore;
     else data.score = Number(value);
     newArr.splice(index, 1, data);
-    console.log(newArr);
     setSelectedStudents(newArr);
   };
 
@@ -41,7 +37,7 @@ const StudentCard = ({ data }) => {
               onChange={handleScore}
               max={maxScore}
             />
-            /<span className=" text-sm">{maxScore}</span>
+            /<span className="text-sm">{maxScore}</span>
           </b>
           <Button
             className="felx-1"

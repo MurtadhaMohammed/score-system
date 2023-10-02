@@ -10,7 +10,7 @@ import {
   Avatar,
 } from "@nextui-org/react";
 import { useStudentStore } from "../store";
-import { useAppStore, useStudentCourse } from "@/stores";
+import { useAppStore } from "@/stores";
 import { axios } from "@/lib";
 
 export const PureForm = () => {
@@ -30,8 +30,7 @@ export const PureForm = () => {
     setImg,
     reset,
   } = useStudentStore();
-  const { course, loading, setCourses, setLoading } = useAppStore();
-  const { setStudentCourse } = useStudentCourse();
+  const { course, loading, setUpdate, setLoading } = useAppStore();
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -46,9 +45,8 @@ export const PureForm = () => {
 
     if (id) await axios.put(`/student/${id}`, data);
     else await axios.post("/student", data);
-
-    const studentCourses = await axios.get(`/student?courseId=${course.id}`);
-    setStudentCourse(studentCourses.data.data);
+    
+    setUpdate()
 
     setLoading(false);
     setIsModal(false);

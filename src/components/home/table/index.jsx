@@ -7,23 +7,20 @@ import {
   TableCell,
   Card,
   Avatar,
-  Chip,
   Button,
   Switch,
   Spinner,
 } from "@nextui-org/react";
 
-import { BiEdit, BiTrash } from "react-icons/bi";
+import { BiEdit } from "react-icons/bi";
 import { useStudentStore } from "../store";
 // import { students } from "@/fake";
-import { useAppStore, useStudentCourse } from "@/stores";
+import { useAppStore } from "@/stores";
 import { axios } from "@/lib";
 import DeleteButton from "@/components/buttons/deleteButton";
 
 export const PureTable = ({ head = null }) => {
-  const { loading, setLoading, course } = useAppStore();
-
-  const { studentCourse, setStudentCourse } = useStudentCourse();
+  const { loading, setLoading , setUpdate} = useAppStore();
 
   const {
     setIsModal,
@@ -33,13 +30,9 @@ export const PureTable = ({ head = null }) => {
     setEmail,
     setBirthDate,
     setImg,
+    students,
   } = useStudentStore();
 
-  const getData = async () => {
-    setLoading(true);
-    const studentCourses = await axios.get(`/student?courseId=${course.id}`);
-    setStudentCourse(studentCourses.data.data);
-  };
   const handleEdit = (row) => {
     setId(row?.id);
     setName(row?.name);
@@ -54,8 +47,7 @@ export const PureTable = ({ head = null }) => {
     setLoading(true);
     await axios.patch(`/student/${id}`);
 
-    await getData();
-
+    setUpdate();
     setLoading(false);
   };
 
@@ -78,8 +70,8 @@ export const PureTable = ({ head = null }) => {
               loading ? <Spinner label="Loading..." /> : "No rows to display."
             }
           >
-            {studentCourse &&
-              studentCourse?.map((student) => (
+            {students &&
+              students?.map((student) => (
                 <TableRow key={student?.id}>
                   <TableCell>
                     <Avatar size="sm" src={student?.img} />
@@ -110,7 +102,7 @@ export const PureTable = ({ head = null }) => {
                       </Button>
                       <DeleteButton
                         link={`/student/${student.id}`}
-                        fetchData={getData}
+                        fetchData={()=> setUpdate()}
                       />
                     </div>
                   </TableCell>

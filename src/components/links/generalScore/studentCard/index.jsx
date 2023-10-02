@@ -3,12 +3,10 @@
 import { Card, User } from "@nextui-org/react";
 import { PiCrownBold } from "react-icons/pi";
 
-import { courses } from "@/fake";
-
-const StudentCard = ({ data, type, course, isCrown = false }) => {
+const StudentCard = ({ data, course, isCrown = false }) => {
   let { score, name, email, img } = data;
-  let courseInfo = courses.find((el) => el?.id === Number(course));
-  let { quiz, task } = courseInfo?.score || {};
+  let { quiz, task } = course?.grade || {};
+
   return (
     <Card className="p-5 w-full" shadow="sm">
       {isCrown && (
@@ -24,11 +22,10 @@ const StudentCard = ({ data, type, course, isCrown = false }) => {
             color: isCrown && "warning",
           }}
           name={name}
-          description={email}
+          description={email || "has no email !"}
         />
-        <b className="text-yellow-500 text-3xl">
-          {score}/
-          <span className="text-sm">{task + quiz}</span>
+        <b className="text-yellow-500 text-2xl">
+          {score}/<span className="text-sm">{task + quiz}</span>
         </b>
       </div>
     </Card>

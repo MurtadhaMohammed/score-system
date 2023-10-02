@@ -11,10 +11,10 @@ export async function GET(req, { params }) {
       id,
     },
     include: {
-      student: true,
-      projects: true,
+      // student: true,
+      // projects: true,
       grade: true,
-      Activitiy: true,
+      // Activitiy: true,
     },
   });
 

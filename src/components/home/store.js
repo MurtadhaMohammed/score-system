@@ -8,6 +8,8 @@ export const useStudentStore = create((set) => ({
   img: null,
   phone: null,
   email: null,
+  students: [],
+  setStudents: (students) => set({ students }),
   setIsModal: (isModal) => set({ isModal }),
   setName: (name) => set({ name }),
   setBirthDate: (birthDate) => set({ birthDate }),

@@ -69,29 +69,28 @@ export const ScroeModal = () => {
     setSelectedStudents([...selectedStudents, { ...student, score: 0 }]);
   };
 
+  const getData = async () => {
+    setIsProjectLoading(true);
+
+    const { data } = await axios.get(`/projects/${id}`);
+
+    const ids = data.data?.students?.map((el) => el?.id);
+
+    // console.log("selected API", data.data?.student);
+
+    setSelectedStudents(data.data?.student);
+
+    setStudentIds(ids);
+
+    setIsProjectLoading(false);
+  };
+
   useEffect(() => {
-    const getData = async () => {
-      setIsProjectLoading(true);
-
-      const { data } = await axios.get(`/projects/${id}`);
-
-      const ids = data.data?.students?.map((el) => el?.id);
-
-      console.log("selected API", data.data?.student);
-
-      setSelectedStudents(data.data?.student);
-
-      setStudentIds(ids);
-
-      setIsProjectLoading(false);
-    };
-
-    getData().then();
-  }, [id]);
+    if (id && isScoreModal) getData().then();
+  }, [id, isScoreModal]);
 
   useEffect(() => {
     let ids = selectedStudents?.map((el) => el?.id);
-
     setStudentIds(ids);
   }, [selectedStudents]);
 

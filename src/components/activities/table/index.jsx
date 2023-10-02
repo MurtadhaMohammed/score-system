@@ -13,11 +13,10 @@ import {
   Spinner,
 } from "@nextui-org/react";
 
-import { BiEdit, BiTrash } from "react-icons/bi";
+import { BiEdit } from "react-icons/bi";
 import { AiOutlineFundView } from "react-icons/ai";
 import { LuImport } from "react-icons/lu";
 import { useActivitiesStore } from "../store";
-import { activitiesList } from "@/fake";
 import { useAppStore } from "@/stores/app";
 import fileDialog from "file-dialog";
 import csvFileToJSON from "@/helper/csvFileToJSON";
@@ -41,10 +40,8 @@ export const PureTable = ({ head = null }) => {
     setType,
     setScoreData,
     activities,
-    setActivities,
-    typeQuery,
   } = useActivitiesStore();
-  const { loading, course, setLoading } = useAppStore();
+  const { loading, setLoading, setUpdate } = useAppStore();
 
   const handleEdit = (row) => {
     setId(row?.id);
@@ -77,25 +74,10 @@ export const PureTable = ({ head = null }) => {
     setIsScoreModal(true);
   };
 
-  const getData = async () => {
-    setLoading(true);
-
-    const { data: activityData } = await axios.get(
-      `/activity?courseId=${course.id}&type=${typeQuery}`
-    );
-
-    setActivities(activityData.data);
-
-    setLoading(false);
-  };
-
   const onSwitchClick = async (id) => {
     setLoading(true);
-
     await axios.patch(`/activity/${id}`);
-
-    await getData();
-
+    setUpdate()
     setLoading(false);
   };
 
@@ -190,7 +172,8 @@ export const PureTable = ({ head = null }) => {
                     >
                       <DeleteButton
                         link={`/activity/${activity.id}`}
-                        fetchData={getData}
+                        fetchData={()=> setUpdate()}
+                        // fetchData={getData}
                       />
                     </Button>
                   </div>

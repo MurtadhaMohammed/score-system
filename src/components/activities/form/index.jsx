@@ -30,11 +30,8 @@ export const PureForm = () => {
     reset,
     type,
     setType,
-    activities,
-    setActivities,
-    typeQuery,
   } = useActivitiesStore();
-  const { course, setLoading, loading } = useAppStore();
+  const { course, setLoading, loading, setUpdate } = useAppStore();
 
   const handleSubmit = async () => {
     let data = {
@@ -50,14 +47,8 @@ export const PureForm = () => {
     if (id) await axios.put(`/activity/${id}`, data);
     else await axios.post("/activity", data);
 
-    const res = await axios.get(
-      `/activity?courseId=${course.id}&type=${typeQuery}`
-    );
-
-    setActivities(res.data.data);
-
+    setUpdate();
     setLoading(false);
-
     setIsModal(false);
   };
 

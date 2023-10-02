@@ -21,15 +21,14 @@ import { LuUser } from "react-icons/lu";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { useAppStore, useStudentCourse } from "@/stores";
-import { useProjectStore } from "@/components/projects/store";
 import { useEffect } from "react";
 import { axios } from "@/lib";
-import { SessionProvider, useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const MainHeader = () => {
   const { setCourse, setLoading, courses, setCourses } = useAppStore();
-  const { setStudentCourse } = useStudentCourse();
-  const { setProjects } = useProjectStore();
+  // const { setStudentCourse } = useStudentCourse();
+
 
   const pathname = usePathname();
 
@@ -62,8 +61,7 @@ const MainHeader = () => {
     setLoading(true);
 
     const selectedCourse = (await axios.get(`/course/${courseId}`)).data.data;
-
-    setStudentCourse(selectedCourse?.student);
+    // setStudentCourse(selectedCourse?.student);
     setCourse(selectedCourse);
     // setProjects(selectedCourse?.projects);
 

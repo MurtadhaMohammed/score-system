@@ -25,11 +25,9 @@ export const PureForm = () => {
     description,
     setDescription,
     setTitle,
-    setId,
     reset,
-    setProjects,
   } = useProjectStore();
-  const { course, setLoading, loading } = useAppStore();
+  const { course, setLoading, loading, setUpdate } = useAppStore();
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -38,15 +36,9 @@ export const PureForm = () => {
     if (id) await axios.put(`/projects/${id}`, data);
     else await axios.post(`/projects`, data);
 
-    setIsModal(false);
-
-    const { data: projectsData } = await axios.get(
-      `/projects?courseId=${course.id}`
-    );
-
-    setProjects(projectsData.data);
-
+    setUpdate()
     setLoading(false);
+    setIsModal(false)
   };
 
   return (

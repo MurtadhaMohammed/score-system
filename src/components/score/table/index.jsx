@@ -35,19 +35,8 @@ export const PureTable = ({ head = null }) => {
     setType,
     setActivity,
     scores,
-    setScores,
   } = useScoreStore();
-  const { loading, setLoading, course } = useAppStore();
-
-  const getData = async () => {
-    setLoading(true);
-
-    const score = await axios.get("/score?courseId=" + course.id);
-
-    setScores(score.data.data);
-
-    setLoading(false);
-  };
+  const { loading, setLoading, setUpdate } = useAppStore();
 
   const handleEdit = (row) => {
     setId(row?.id);
@@ -61,7 +50,8 @@ export const PureTable = ({ head = null }) => {
     setLoading(true);
 
     await axios.patch(`/score/${id}`);
-    await getData();
+    setUpdate();
+    setLoading(false);
   };
 
   return (
@@ -127,7 +117,7 @@ export const PureTable = ({ head = null }) => {
                       >
                         <DeleteButton
                           link={`/score/${link.id}`}
-                          fetchData={getData}
+                          fetchData={() => setUpdate()}
                         />
                       </Button>
                     </div>
