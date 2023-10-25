@@ -44,6 +44,22 @@ export async function PATCH(req, { params }) {
 export async function DELETE(req, { params }) {
   const { id } = params;
 
+  await prisma.studentActivitiy.deleteMany({
+    where: {
+      student: {
+        id,
+      },
+    },
+  });
+
+  await prisma.stduentProject.deleteMany({
+    where: {
+      student: {
+        id,
+      },
+    },
+  });
+
   await prisma.student.delete({
     where: {
       id,
