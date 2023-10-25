@@ -8,6 +8,7 @@ import { ProjectsRate } from "@/components/links/projectsRate";
 import { useParams } from "next/navigation";
 import { axios } from "@/lib";
 
+
 export default function Link() {
   const params = useParams();
 
