@@ -21,6 +21,7 @@ export const RandomStudent = () => {
   const [loading, setLoading] = useState(false);
   const [current, setCurrent] = useState({});
   const [used, setUsed] = useState([]);
+  const [scale, setScale] = useState(1.5);
 
   useEffect(() => {
     if (students?.length !== 0) return;
@@ -92,16 +93,19 @@ export const RandomStudent = () => {
       setCurrent({});
       return;
     }
-
-    setCurrent(() => student);
-    setUsed([...used, student]);
+    setScale(1.8);
+    setTimeout(() => {
+      setScale(1.5);
+      setCurrent(() => student);
+      setUsed([...used, student]);
+    }, 200);
   };
 
   //35924682-1d55-4e1f-b795-ad14d75cb6b5
 
   return (
     <div>
-      {current?.id && <StudentCard data={current} />}
+      {current?.id && <StudentCard scale={scale} data={current} />}
 
       {current?.id && <Divider className="mt-12 mb-6" />}
       <ul className=" text-lg">
