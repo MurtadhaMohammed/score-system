@@ -21,8 +21,12 @@ const StudentCard = ({ data, course, isCrown = false }) => {
             isBordered: isCrown,
             color: isCrown && "warning",
           }}
-          name={name}
-          description={email || "has no email !"}
+          name={<span className="text-trunc">{name}</span>}
+          description={
+            email?.length > 20
+              ? `${email.substr(0, 20)}...`
+              : email || "has no email !"
+          }
         />
         <b className="text-yellow-500 text-lg">
           {score}/<span className="text-sm">{task + quiz}</span>
