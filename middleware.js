@@ -18,9 +18,9 @@ export function middleware(req) {
   return response;
 }
 
-export const config = {
-  matcher: "/dashboard/:path*"
-};
+// export const config = {
+//   matcher: "/dashboard/:path*"
+// };
 
 // matcher: [
 //   // "/api/activity/:path*",
