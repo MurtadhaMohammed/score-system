@@ -36,7 +36,7 @@ const MainHeader = () => {
 
   const { status } = useSession();
 
-  if (!pathname.includes("login")) {
+  if (!pathname.includes("login") || !pathname.includes("link")) {
     if (status === "unauthenticated") signIn();
   }
 
