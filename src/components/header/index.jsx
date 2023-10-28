@@ -36,8 +36,8 @@ const MainHeader = () => {
 
   const { status } = useSession();
 
-  if (!pathname.includes("login") || !pathname.includes("link")) {
-    if (status === "unauthenticated") signIn();
+  if (!pathname.includes("login")) {
+    if (status === "unauthenticated" && !pathname.includes("link")) signIn();
   }
 
   useEffect(() => {
@@ -70,7 +70,12 @@ const MainHeader = () => {
     setLoading(false);
   };
 
-  if (pathname.includes("login") || pathname.includes("link") || pathname.includes("random")) return null;
+  if (
+    pathname.includes("login") ||
+    pathname.includes("link") ||
+    pathname.includes("random")
+  )
+    return null;
 
   return (
     <div className="pt-8 pb-2 mb-6 border-b-1 border-b-slate-100">
