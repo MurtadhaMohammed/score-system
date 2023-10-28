@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export function middleware(req) {
-  const response = NextResponse.next();
+  const response = NextResponse.next(req);
 
   response.headers.set("Access-Control-Allow-Origin", "*");
   response.headers.set(
@@ -20,13 +20,14 @@ export function middleware(req) {
 
 export const config = {
   matcher: "/dashboard/:path*"
-  // matcher: [
-  //   // "/api/activity/:path*",
-  //   // "/api/course/:path*",
-  //   "/api/projects/:path*",
-  //   "/api/session/:path*",
-  //   "/api/student/:path*",
-  //   "/api/studentActivitiy/:path*",
-  //   "/api/assignStudentToProject/:path*",
-  // ],
 };
+
+// matcher: [
+//   // "/api/activity/:path*",
+//   // "/api/course/:path*",
+//   "/api/projects/:path*",
+//   "/api/session/:path*",
+//   "/api/student/:path*",
+//   "/api/studentActivitiy/:path*",
+//   "/api/assignStudentToProject/:path*",
+// ],
