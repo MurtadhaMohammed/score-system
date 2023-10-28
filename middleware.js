@@ -21,7 +21,7 @@ export function middleware(req) {
 export const config = {
   matcher: [
     // "/api/activity/:path*",
-    "/api/course/:path*",
+    // "/api/course/:path*",
     "/api/projects/:path*",
     "/api/session/:path*",
     "/api/student/:path*",
