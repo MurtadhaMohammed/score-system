@@ -17,19 +17,32 @@ function largestScore(arr = []) {
   return Number(max.score);
 }
 
-function studentsList({ students, totalActivity }) {
+function studentsList({ students, totalQuizs, totalTasks }) {
+  console.log(totalQuizs, totalTasks)
   let list = [];
   for (const s of students) {
-    let score = s.StudentActivitiy.filter((el) => el?.activitiy?.active).reduce(
-      (acc, curr) => {
-        return acc + curr.score;
-      },
-      0
+    let quizes = s.StudentActivitiy.filter(
+      (el) => el?.activitiy?.active && el?.activitiy?.type === "QUIZ"
     );
+
+    let tasks = s.StudentActivitiy.filter(
+      (el) => el?.activitiy?.active && el?.activitiy?.type === "TASK"
+    );
+
+    let totalQuizeScore = quizes.reduce((acc, curr) => {
+      return acc + curr.score;
+    }, 0);
+
+    let totalTaskScore = tasks.reduce((acc, curr) => {
+      return acc + curr.score;
+    }, 0);
+
+    let quizAvarage = totalQuizeScore / totalQuizs || 0;
+    let taskAvarage = totalTaskScore / totalTasks || 0;
 
     list.push({
       ...s,
-      score: (score / totalActivity).toFixed(1),
+      score: (quizAvarage + taskAvarage).toFixed(1),
     });
   }
 

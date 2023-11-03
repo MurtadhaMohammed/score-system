@@ -10,6 +10,21 @@ export async function GET(req, { params }) {
       active: true,
     },
   });
+  const totalTasks = await prisma.activitiy.count({
+    where: {
+      courseId: courseId,
+      active: true,
+      type: "TASK",
+    },
+  });
+
+  const totalQuizs = await prisma.activitiy.count({
+    where: {
+      courseId: courseId,
+      active: true,
+      type: "QUIZ",
+    },
+  });
   const students = await prisma.student.findMany({
     where: {
       courseId: courseId,
@@ -24,6 +39,6 @@ export async function GET(req, { params }) {
   });
 
   return NextResponse.json({
-    data: { students, totalActivity },
+    data: { students, totalActivity, totalQuizs, totalTasks },
   });
 }
