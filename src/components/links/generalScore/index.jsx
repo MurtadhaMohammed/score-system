@@ -18,7 +18,6 @@ function largestScore(arr = []) {
 }
 
 function studentsList({ students, totalQuizs, totalTasks }) {
-  console.log(totalQuizs, totalTasks)
   let list = [];
   for (const s of students) {
     let quizes = s.StudentActivitiy.filter(
