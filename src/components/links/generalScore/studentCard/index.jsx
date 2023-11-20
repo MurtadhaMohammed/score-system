@@ -14,6 +14,7 @@ const StudentCard = ({ data, course, isCrown = false }) => {
           <PiCrownBold size={18} className="text-yellow-500" />
         </div>
       )}
+      {Number(score) < (task + quiz) / 2 && <div className="absolute top-3 left-3 z-10">💔</div>}
       <div className="flex justify-between items-center">
         <User
           avatarProps={{
