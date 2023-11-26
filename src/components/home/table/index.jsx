@@ -52,7 +52,7 @@ export const PureTable = ({ head = null }) => {
   };
 
   return (
-    <div className="max-w-6xl m-auto pl-6 pr-6">
+    <div className="max-w-6xl m-auto pl-6 pr-6 pb-20">
       <Card className="p-6">
         {head && head}
         <Table aria-label="Example static collection table" removeWrapper>

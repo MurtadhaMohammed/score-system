@@ -92,3 +92,21 @@ export async function POST(req, { params }) {
 
 //   return NextResponse.json({ activitiy });
 // }
+
+export async function PUT(req, { params }) {
+  const { id } = params;
+  const { score } = await req.json();
+  try {
+    let studentActivitiy = await prisma.studentActivitiy.update({
+      where: {
+        id,
+      },
+      data: {
+        score: Number(score),
+      },
+    });
+    return NextResponse.json({ success: true, studentActivitiy });
+  } catch (error) {
+    return NextResponse.json({ success: false, error });
+  }
+}

@@ -47,9 +47,9 @@ export const ScroeModal = () => {
         <ModalBody>
           <div className="grid grid-cols-3 gap-4 mt-4 mb-4">
             {selectedActivity &&
-              selectedActivity.StudentActivitiy.map((el, i) => (
-                <StudentCard key={i} data={el} type={type} />
-              ))}
+              selectedActivity.StudentActivitiy?.sort(
+                (a, b) => b.studentPhone - a.studentPhone
+              )?.map((el, i) => <StudentCard key={i} data={el} type={type} />)}
           </div>
         </ModalBody>
         <ModalFooter className="border-t-1 border-t-slate-100">

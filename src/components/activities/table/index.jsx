@@ -77,7 +77,7 @@ export const PureTable = ({ head = null }) => {
   const onSwitchClick = async (id) => {
     setLoading(true);
     await axios.patch(`/activity/${id}`);
-    setUpdate()
+    setUpdate();
     setLoading(false);
   };
 
@@ -99,87 +99,89 @@ export const PureTable = ({ head = null }) => {
               loading ? <Spinner label="Loading..." /> : "No rows to display."
             }
           >
-            {activities?.map((activity) => (
-              <TableRow key={activity?.id}>
-                <TableCell>
-                  <Chip
-                    variant="dot"
-                    color={chipColor[activity?.type]}
-                    size="md"
-                  >
-                    {activity?.type?.toLowerCase()}
-                  </Chip>
-                </TableCell>
-                <TableCell>
-                  <b>{activity?.title}</b>
-                </TableCell>
-                <TableCell className="text-slate-600">
-                  <div
-                    className="activity-info"
-                    dangerouslySetInnerHTML={{ __html: activity?.info }}
-                  ></div>
-                </TableCell>
-                <TableCell>{activity?.date}</TableCell>
-                <TableCell>
-                  <Switch
-                    defaultSelected={activity?.active}
-                    size="sm"
-                    aria-label="Automatic updates"
-                    onChange={() => onSwitchClick(activity?.id)}
-                  />
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-2 w-full justify-end">
-                    {activity?.finish && (
+            {activities
+              ?.sort((a, b) => b.active - a.active)
+              ?.map((activity) => (
+                <TableRow key={activity?.id}>
+                  <TableCell>
+                    <Chip
+                      variant="dot"
+                      color={chipColor[activity?.type]}
+                      size="md"
+                    >
+                      {activity?.type?.toLowerCase()}
+                    </Chip>
+                  </TableCell>
+                  <TableCell>
+                    <b>{activity?.title}</b>
+                  </TableCell>
+                  <TableCell className="text-slate-600">
+                    <div
+                      className="activity-info"
+                      dangerouslySetInnerHTML={{ __html: activity?.info }}
+                    ></div>
+                  </TableCell>
+                  <TableCell>{activity?.date}</TableCell>
+                  <TableCell>
+                    <Switch
+                      defaultSelected={activity?.active}
+                      size="sm"
+                      aria-label="Automatic updates"
+                      onChange={() => onSwitchClick(activity?.id)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2 w-full justify-end">
+                      {activity?.finish && (
+                        <Button
+                          startContent={<AiOutlineFundView size={18} />}
+                          variant="bordered"
+                          size="sm"
+                          color="primary"
+                          onClick={() => handleViewScore(activity)}
+                        >
+                          View Score
+                        </Button>
+                      )}
+                      {!activity?.finish && (
+                        <Button
+                          startContent={<LuImport size={18} />}
+                          size="sm"
+                          color="secondary"
+                          isLoading={loading}
+                          isDisabled={loading}
+                          onClick={() => handleImportCSV(activity)}
+                        >
+                          Import CSV
+                        </Button>
+                      )}
+
                       <Button
-                        startContent={<AiOutlineFundView size={18} />}
                         variant="bordered"
                         size="sm"
-                        color="primary"
-                        onClick={() => handleViewScore(activity)}
+                        isIconOnly
+                        onClick={() => handleEdit(activity)}
                       >
-                        View Score
+                        <BiEdit size={18} />
                       </Button>
-                    )}
-                    {!activity?.finish && (
+
                       <Button
-                        startContent={<LuImport size={18} />}
+                        variant="bordered"
                         size="sm"
-                        color="secondary"
-                        isLoading={loading}
-                        isDisabled={loading}
-                        onClick={() => handleImportCSV(activity)}
+                        color="danger"
+                        isIconOnly
+                        disabled
                       >
-                        Import CSV
+                        <DeleteButton
+                          link={`/activity/${activity.id}`}
+                          fetchData={() => setUpdate()}
+                          // fetchData={getData}
+                        />
                       </Button>
-                    )}
-
-                    <Button
-                      variant="bordered"
-                      size="sm"
-                      isIconOnly
-                      onClick={() => handleEdit(activity)}
-                    >
-                      <BiEdit size={18} />
-                    </Button>
-
-                    <Button
-                      variant="bordered"
-                      size="sm"
-                      color="danger"
-                      isIconOnly
-                      disabled
-                    >
-                      <DeleteButton
-                        link={`/activity/${activity.id}`}
-                        fetchData={()=> setUpdate()}
-                        // fetchData={getData}
-                      />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </Card>
