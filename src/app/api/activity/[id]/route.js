@@ -46,13 +46,17 @@ export async function PATCH(req, { params }) {
 export async function DELETE(req, { params }) {
   const { id } = params;
 
-  await prisma.activitiy.delete({
-    where: {
-      id,
-    },
-  });
+  try {
+    await prisma.activitiy.delete({
+      where: {
+        id,
+      },
+    });
 
-  return NextResponse.json({ req });
+    return NextResponse.json({ req });
+  } catch (error) {
+    return NextResponse.json({ req, error });
+  }
 }
 
 export async function GET(req, { params }) {

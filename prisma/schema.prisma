@@ -107,7 +107,7 @@ model StudentActivitiy {
   activitiyId  String
   score        Int
   createdAt    DateTime  @default(now())
-  activitiy    Activitiy @relation(fields: [activitiyId], references: [id])
+  activitiy    Activitiy @relation(fields: [activitiyId], references: [id], onDelete: Cascade)
   student      Student   @relation(fields: [studentPhone], references: [phone])
 }
 

@@ -7,6 +7,7 @@ import { ScroeModal } from "@/components/activities/scoreModal";
 import { useActivitiesStore } from "@/components/activities/store";
 import { useAppStore } from "@/stores";
 import { axios } from "@/lib";
+import { ManualModal } from "@/components/activities/manualModal";
 
 export default function Activities() {
   const { setActivities, typeQuery } = useActivitiesStore();
@@ -36,6 +37,7 @@ export default function Activities() {
       <PureForm />
       <ImportModal />
       <ScroeModal />
+      <ManualModal />
     </main>
   );
 }

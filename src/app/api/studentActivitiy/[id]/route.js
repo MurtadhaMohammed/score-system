@@ -18,9 +18,9 @@ export async function POST(req, { params }) {
   const data = [];
 
   request.data.forEach((d) => {
-    if (d.phone && d.score)
+    if (d.phone)
       data.push({
-        score: Number(d.score),
+        score: Number(d.score || 0),
         activitiyId: id,
         studentPhone: d.phone,
       });

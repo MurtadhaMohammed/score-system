@@ -11,6 +11,10 @@ import {
   Switch,
   Chip,
   Spinner,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
 } from "@nextui-org/react";
 
 import { BiEdit } from "react-icons/bi";
@@ -40,6 +44,7 @@ export const PureTable = ({ head = null }) => {
     setType,
     setScoreData,
     activities,
+    setIsManualModal,
   } = useActivitiesStore();
   const { loading, setLoading, setUpdate } = useAppStore();
 
@@ -64,6 +69,13 @@ export const PureTable = ({ head = null }) => {
         setIsImportModal(true);
       });
     });
+  };
+
+  const openManualModal = async (row) => {
+    setId(row?.id);
+    setTitle(row?.title);
+    setType(row?.type);
+    setIsManualModal(true);
   };
 
   const handleViewScore = (row) => {
@@ -144,18 +156,31 @@ export const PureTable = ({ head = null }) => {
                         </Button>
                       )}
                       {!activity?.finish && (
-                        <Button
-                          startContent={<LuImport size={18} />}
-                          size="sm"
-                          color="secondary"
-                          isLoading={loading}
-                          isDisabled={loading}
-                          onClick={() => handleImportCSV(activity)}
-                        >
-                          Import CSV
-                        </Button>
+                        <Dropdown>
+                          <DropdownTrigger>
+                            <Button
+                              startContent={<LuImport size={18} />}
+                              size="sm"
+                              color="secondary"
+                              isLoading={loading}
+                              isDisabled={loading}
+                            >
+                              Add Score
+                            </Button>
+                          </DropdownTrigger>
+                          <DropdownMenu
+                            aria-label="Static Actions"
+                            onAction={(key) => {
+                              if (key === "csv") handleImportCSV(activity);
+                              else if (key === "manual")
+                                openManualModal(activity);
+                            }}
+                          >
+                            <DropdownItem key="csv">Import CSV</DropdownItem>
+                            <DropdownItem key="manual">Add Manual</DropdownItem>
+                          </DropdownMenu>
+                        </Dropdown>
                       )}
-
                       <Button
                         variant="bordered"
                         size="sm"
