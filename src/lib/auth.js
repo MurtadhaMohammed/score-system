@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export const authOptions = {
   pages: {
     signIn: "/login",
+    // signUp: "/signup",
     // error: "/dashboard",
   },
   session: {
@@ -20,6 +21,7 @@ export const authOptions = {
           type: "email",
           placeholder: "example@example.com",
         },
+    
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
